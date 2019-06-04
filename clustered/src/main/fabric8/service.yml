@@ -1,0 +1,4 @@
+metadata:
+  annotations:
+    api.service.kubernetes.io/path: /
+    service.alpha.openshift.io/serving-cert-secret-name: tls-certs

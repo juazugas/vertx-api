@@ -1,0 +1,47 @@
+spec:
+  replicas: 3
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 10
+      intervalSeconds: 20
+      timeoutSeconds: 600
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    spec:
+      volumes:
+      - name: tls-certs
+        secret:
+          secretName: tls-certs
+      containers:
+       - volumeMounts:
+         - mountPath: /var/run/secrets/openshift.io/tls-certs
+           name: tls-certs
+           readOnly: true
+         env:
+            - name: JAVA_OPTIONS
+              value: >-
+                -Dvertx.cacheDirBase=/tmp
+                -Dvertx.disableDnsResolver=true
+                -Djava.net.preferIPv4Stack=true
+            - name: JAVA_ARGS
+              value: 'run server.WebApp --cluster'
+#            - name: AB_JOLOKIA_OPTS
+#              value: serverCert=/var/run/secrets/openshift.io/tls-certs/tls.crt,serverKey=/var/run/secrets/openshift.io/tls-certs/tls.key
+            - name: AB_JOLOKIA_PASSWORD
+              value: secret
+            - name: AB_JOLOKIA_PASSWORD_RANDOM
+              value: "false"
+         livenessProbe:
+           initialDelaySeconds: 10
+           httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+         readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: /readiness
+              port: 8080
+              scheme: HTTP

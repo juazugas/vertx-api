@@ -4,13 +4,21 @@ import static commons.Config.BY;
 import static commons.Config.REBOOT_ADDRESS;
 import static commons.Config.STATUS;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
+import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.json.JsonObject;
+
+import io.vertx.ext.cluster.infinispan.ClusterHealthCheck;
+import io.vertx.ext.healthchecks.HealthCheckHandler;
+import io.vertx.ext.healthchecks.HealthChecks;
+import io.vertx.ext.healthchecks.Status;
+import io.vertx.ext.web.Router;
 
 public class Monitoring extends AbstractVerticle {
 
@@ -23,6 +31,7 @@ public class Monitoring extends AbstractVerticle {
          JsonObject reboot = message.body();
          logger.info(("Status " + reboot.getString(STATUS) + " by " + reboot.getString(BY)));
       });
+
       startFuture.complete();
    }
 
@@ -37,4 +46,6 @@ public class Monitoring extends AbstractVerticle {
          }
       });
    }
+
+
 }

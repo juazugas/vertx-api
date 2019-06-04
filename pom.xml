@@ -16,10 +16,10 @@
   </modules>
 
   <properties>
-    <infinispan.version>9.4.6.Final</infinispan.version>
-    <vertx.version>3.6.3</vertx.version>
+    <infinispan.version>9.4.10.Final</infinispan.version>
+    <vertx.version>3.7.0</vertx.version>
     <vertx-maven-plugin.version>1.0.18</vertx-maven-plugin.version>
-    <fabric8-maven-plugin.version>4.0.0-M2</fabric8-maven-plugin.version>
+    <fabric8-maven-plugin.version>4.1.0</fabric8-maven-plugin.version>
     <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
   </properties>
 
